@@ -1,0 +1,43 @@
+// 单点登录功能的接口定义
+
+// proto版本
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "single_login.android.wangzh.proto";
+option java_outer_classname = "LoginProto";
+option objc_class_prefix = "LP";
+
+package proto;
+
+// 单点登录系统与前端交互的接口
+service SingleLogin {
+
+    // 调用接口的公共方法，例如登录、注册等。也可以和客户端维持登录状态的双向流式接口
+    rpc serviceFunc (stream InParam) returns (stream OutParam) {
+    }
+}
+
+// 维持登录状态的接口
+
+// 接口入参
+message InParam {
+    // 调用的功能号，用于判断本次请求调用的是登录还是注册等
+    int32 funcNo = 10;
+
+    // 入参集合
+    map<string, string> params = 20;
+}
+
+// 接口出参
+message OutParam {
+
+    // 错误编码，用于判断接口调用是否成功，为0时表示调用成功
+    int32 error_no = 10;
+
+    // 错误信息，用于展示给前端本次接口调用的结果。
+    string error_info = 20;
+
+    // 输出结果集
+    map<string, string> resultMap = 30;
+}
